@@ -32,6 +32,7 @@ while running:
         if snake_movement_timer == snake_movement_speed:
             snake_movement_timer = 0
             game = game_map.move_snake()
+            apple_message.set_message("APPLES: " + str(game_map.apple_count))
         snake_movement_timer += 1
     all_sprites.update()
     screen.fill(GREY)
@@ -43,7 +44,7 @@ while running:
         no_message.draw()
         yes_message.update(PURPLE)
         no_message.update(PURPLE)
-
+    apple_message.draw()
     # Визуализация (сборка)
     pygame.display.flip()
 

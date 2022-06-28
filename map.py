@@ -28,6 +28,7 @@ class Map:
             self.field.append(row)
         self.snake = Snake()
         self.apple = self.snake.get_apple_pos()
+        self.apple_count = 0
 
     def make_picture(self):
         self.field[self.apple[0]][self.apple[1]].paint(init.RED)
@@ -50,6 +51,7 @@ class Map:
             if pos == self.apple:
                 self.apple = self.snake.get_apple_pos()
                 self.snake.grow()
+                self.apple_count += 1
             self.snake.move()
         return True
 
@@ -68,5 +70,6 @@ class Map:
             self.field.append(row)
         self.snake = Snake()
         self.apple = self.snake.get_apple_pos()
+        self.apple_count = 0
 
 

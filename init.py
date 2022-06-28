@@ -31,11 +31,13 @@ clock = pygame.time.Clock()
 all_sprites = pygame.sprite.Group()
 
 game_map = Map()
-snake_movement_speed = 15
+snake_movement_speed = 10
 snake_movement_timer = 0
 game = True
+apple_count = 0
 
 gio_message = Text(54, (WIDTH / 2, HEIGHT / 2 - 60), "GAME IS OVER", BLACK, YELLOW)
 pa_message = Text(36, (WIDTH / 2, HEIGHT / 2 + 10), "Play again?", BLACK, CYAN)
 yes_message = Text(36, (WIDTH / 2 - 40, HEIGHT / 2 + 60), "YES", BLACK, GREEN)
 no_message = Text(36, (WIDTH / 2 + 40, HEIGHT / 2 + 60), "NO", BLACK, RED)
+apple_message = Text(36, (70, 25), "APPLES: " + str(game_map.apple_count), BLACK, LIGHT_GREY)
