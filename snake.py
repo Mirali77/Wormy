@@ -52,8 +52,8 @@ class Snake:
         self.nodes.append(self.nodes[-1])
         self.after_last_node_flag = True
 
-    def get_apple_pos(self):
+    def get_apple_pos(self, walls):
         while True:
             pos = (random.randint(0, init.WIDTH // 50 - 1), random.randint(0, init.HEIGHT // 50 - 1))
-            if pos not in self.nodes and pos != self.after_last_node:
+            if pos not in self.nodes and pos != self.after_last_node and pos not in walls:
                 return pos

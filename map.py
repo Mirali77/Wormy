@@ -28,7 +28,7 @@ class Map:
             self.field.append(row)
         self.snake = Snake()
         self.walls = []
-        self.apple = self.snake.get_apple_pos()
+        self.apple = self.snake.get_apple_pos(self.walls)
         self.apple_count = 0
 
     def make_picture(self):
@@ -55,7 +55,7 @@ class Map:
             return False
         else:
             if pos == self.apple:
-                self.apple = self.snake.get_apple_pos()
+                self.apple = self.snake.get_apple_pos(self.walls)
                 self.snake.grow()
                 self.apple_count += 1
                 pygame.mixer.music.load(init.sounds[0])
@@ -86,7 +86,7 @@ class Map:
         for wall in walls:
             self.walls.append((wall[0], wall[1]))
         self.snake.restart()
-        self.apple = self.snake.get_apple_pos()
+        self.apple = self.snake.get_apple_pos(self.walls)
         self.apple_count = 0
 
 
