@@ -27,11 +27,14 @@ class Map:
                 row.append(Tile((49, 49), (idx1 * 50, idx2 * 50), init.all_sprites))
             self.field.append(row)
         self.snake = Snake()
+        self.walls = []
         self.apple = self.snake.get_apple_pos()
         self.apple_count = 0
 
     def make_picture(self):
         self.field[self.apple[0]][self.apple[1]].paint(init.RED)
+        for idx in self.walls:
+            self.field[idx[0]][idx[1]].paint(init.GREY)
         for idx in self.snake.nodes:
             self.field[idx[0]][idx[1]].paint(init.GREEN)
         pos = self.snake.after_last_node
@@ -45,13 +48,18 @@ class Map:
 
     def move_snake(self):
         pos = self.snake.get_forward_tile()
-        if pos[0] * pos[1] < 0 or pos[0] >= init.WIDTH // 50 or pos[1] >= init.HEIGHT // 50 or pos in self.snake.nodes:
+        if pos in self.walls or pos[0] * pos[1] < 0 or pos[0] >= init.WIDTH // 50 or pos[1] >= init.HEIGHT // 50 or \
+                pos in self.snake.nodes:
+            pygame.mixer.music.load(init.sounds[1])
+            pygame.mixer.music.play()
             return False
         else:
             if pos == self.apple:
                 self.apple = self.snake.get_apple_pos()
                 self.snake.grow()
                 self.apple_count += 1
+                pygame.mixer.music.load(init.sounds[0])
+                pygame.mixer.music.play()
             self.snake.move()
         return True
 
@@ -60,7 +68,8 @@ class Map:
             for tile in row:
                 tile.kill()
 
-    def restart(self):
+    def restart(self, walls):
+        pygame.mixer.music.stop()
         self.clear()
         self.field = []
         for idx1 in range(init.WIDTH // 50):
@@ -68,7 +77,15 @@ class Map:
             for idx2 in range(init.HEIGHT // 50):
                 row.append(Tile((49, 49), (idx1 * 50, idx2 * 50), init.all_sprites))
             self.field.append(row)
-        self.snake = Snake()
+        self.walls = []
+        for pos in walls:
+            if pos[0] < 0:
+                pos[0] += len(self.field)
+            if pos[1] < 0:
+                pos[1] += len(self.field[0])
+        for wall in walls:
+            self.walls.append((wall[0], wall[1]))
+        self.snake.restart()
         self.apple = self.snake.get_apple_pos()
         self.apple_count = 0
 

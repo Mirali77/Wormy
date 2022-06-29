@@ -12,6 +12,14 @@ class Snake:
         self.after_last_node = (self.nodes[-1][0] + 1, self.nodes[-1][1])
         self.after_last_node_flag = False
 
+    def restart(self):
+        self.nodes.clear()
+        for idx in range(4):
+            self.nodes.append((init.WIDTH // 50 // 2 - 2 + idx, init.HEIGHT // 50 // 2))
+        self.forward_side = "LEFT"
+        self.after_last_node = (self.nodes[-1][0] + 1, self.nodes[-1][1])
+        self.after_last_node_flag = False
+
     def turn_right(self):
         self.forward_side = self.sides[(self.sides.index(self.forward_side) + 1) % 4]
 
